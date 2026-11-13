@@ -15,6 +15,34 @@ python3 -m http.server 8100 --bind 127.0.0.1
 
 Open http://127.0.0.1:8100/.
 
+## GitHub Pages
+
+Published site (after Pages is enabled on the repo):
+
+**https://jess0131.github.io/counsellor-filter-public-test/**
+
+Start at `index.html` (landing with desktop, mobile, and French links). Prototype URLs:
+
+| Entry | URL |
+| --- | --- |
+| Landing | `/` or `/index.html` |
+| Prototype A (modal) | `/modal/` |
+| Prototype B (sidebar) | `/sidebar/` |
+
+Query params used in testing: `viewport=desktop` or `viewport=mobile`, `lang=fr`, `from=desktop|mobile|french`.
+
+### Enable Pages (repo owner)
+
+One-time setup in [repository Pages settings](https://github.com/Jess0131/counsellor-filter-public-test/settings/pages):
+
+**Option A — branch (simplest)**  
+Source: **Deploy from a branch** → branch **main**, folder **/ (root)** → Save.
+
+**Option B — GitHub Actions**  
+Source: **GitHub Actions**, then push to `main` (workflow `.github/workflows/pages.yml` deploys the static files).
+
+The repo includes `.nojekyll` so paths like `/modal/` work on Pages.
+
 ## Files
 
 | Path | Purpose |
