@@ -1,8 +1,8 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
+  # Use repo Settings → Pages → Deploy from branch `main` / `(root)` for the live site.
+  # Run this workflow manually only if you switch the Pages source to GitHub Actions.
   workflow_dispatch:
 
 permissions:

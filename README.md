@@ -35,11 +35,11 @@ Query params used in testing: `viewport=desktop` or `viewport=mobile`, `lang=fr`
 
 One-time setup in [repository Pages settings](https://github.com/Jess0131/counsellor-filter-public-test/settings/pages):
 
-**Option A — branch (simplest)**  
-Source: **Deploy from a branch** → branch **main**, folder **/ (root)** → Save.
+**Recommended — branch `main` / root**  
+Source: **Deploy from a branch** → branch **main**, folder **/ (root)** → Save. The site updates on each push to `main`.
 
-**Option B — GitHub Actions**  
-Source: **GitHub Actions**, then push to `main` (workflow `.github/workflows/pages.yml` deploys the static files).
+**Optional — GitHub Actions**  
+Source: **GitHub Actions**, then run **Deploy GitHub Pages** from the Actions tab (workflow `.github/workflows/pages.yml`).
 
 The repo includes `.nojekyll` so paths like `/modal/` work on Pages.
 
