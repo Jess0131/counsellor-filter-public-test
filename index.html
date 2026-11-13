@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Counsellor Directory &middot; Usability test</title>
+<meta name="description" content="Usability-test prototypes. Fictional data only. Not a real service.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="shared/styles.css">
+<style>
+  .landing { max-width: 880px; margin: 0 auto; padding: 48px max(24px, env(safe-area-inset-right)) calc(64px + env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left)); }
+  .landing h1 { font-size: 28px; line-height: 36px; margin: 8px 0 12px; }
+  .landing .lede { max-width: 640px; }
+  .panel { margin-top: 40px; padding: 24px; background: var(--bg-alt); border-radius: var(--r-md); }
+  .panel h2 { font-size: 17px; line-height: 24px; font-weight: 600; margin: 0 0 8px; }
+  .panel__intro { color: var(--text-weaker); margin: 0 0 20px; max-width: 640px; }
+  .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .options--mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .option { display: flex; flex-direction: column; gap: 8px; padding: 24px; border: 1px solid var(--border-base); border-radius: var(--r-md); color: inherit; text-decoration: none; background: var(--bg-base); }
+  .option:hover { background: var(--bg-alt); border-color: var(--border-active); }
+  .option:focus-visible { outline: 2px solid var(--border-active); outline-offset: 2px; }
+  .option__tag { color: var(--text-weaker); font-size: 14px; font-weight: 600; }
+  .option__title { font-size: 21px; line-height: 28px; font-weight: 600; }
+  .option__text { color: var(--text-weaker); }
+  .option__cta { margin-top: 8px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .steps { margin-top: 24px; padding: 0; background: transparent; }
+  .steps h2 { font-size: 17px; line-height: 24px; font-weight: 600; margin-bottom: 12px; }
+  .steps ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .note { margin-top: 24px; color: var(--text-weaker); font-size: 14px; }
+  .panel--accent { border: 1px solid var(--border-base); background: var(--bg-base); }
+  @media (max-width: 640px) {
+    .landing { padding-top: 32px; }
+    .options { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+<header class="nav" role="banner">
+  <div class="nav__inner"><span class="nav__brand">Counsellor Directory</span></div>
+</header>
+
+<main class="landing">
+  <p class="eyebrow">Usability test</p>
+  <h1>Find a counsellor</h1>
+  <p class="lede">Two versions of the same counsellor directory. They have the same counsellors and the same preferences. Only the way you set preferences is different.</p>
+
+  <section class="panel" aria-labelledby="desktopTitle">
+    <h2 id="desktopTitle">Desktop usability test</h2>
+    <p class="panel__intro">Desktop layout at a fixed 1440px width. Use a wide monitor; window resizing will not switch layouts.</p>
+    <div class="options">
+      <a class="option" href="modal/?viewport=desktop&amp;from=desktop">
+        <span class="option__tag">Prototype A</span>
+        <span class="option__title">Modal filtering</span>
+        <span class="option__text">Preferences open in a window over the results.</span>
+        <span class="option__cta">Open Prototype A</span>
+      </a>
+      <a class="option" href="sidebar/?viewport=desktop&amp;from=desktop">
+        <span class="option__tag">Prototype B</span>
+        <span class="option__title">Sidebar filtering</span>
+        <span class="option__text">Preferences stay in a column beside the results.</span>
+        <span class="option__cta">Open Prototype B</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="panel panel--accent" aria-labelledby="mobileTitle">
+    <h2 id="mobileTitle">Mobile testing</h2>
+    <p class="panel__intro">Mobile-only test at a fixed 390px width (full-screen modal or drawer). Meant for phones or mobile facilitators&mdash;not for resizing a desktop browser to test responsive breakpoints.</p>
+    <div class="options options--mobile">
+      <a class="option" href="modal/?viewport=mobile&amp;lang=en&amp;from=mobile">
+        <span class="option__tag">Prototype A &middot; Mobile &middot; EN</span>
+        <span class="option__title">Modal on phone</span>
+        <span class="option__text">Preferences open full screen in category steps.</span>
+        <span class="option__cta">Open modal (EN)</span>
+      </a>
+      <a class="option" href="sidebar/?viewport=mobile&amp;lang=en&amp;from=mobile">
+        <span class="option__tag">Prototype B &middot; Mobile &middot; EN</span>
+        <span class="option__title">Drawer on phone</span>
+        <span class="option__text">Tap Preferences to open the slide-in panel.</span>
+        <span class="option__cta">Open sidebar (EN)</span>
+      </a>
+      <a class="option" href="modal/?viewport=mobile&amp;lang=fr&amp;from=mobile">
+        <span class="option__tag">Prototype A &middot; Mobile &middot; FR</span>
+        <span class="option__title">Modal (French)</span>
+        <span class="option__text">Same mobile layout with French UI copy.</span>
+        <span class="option__cta">Ouvrir le modal (FR)</span>
+      </a>
+      <a class="option" href="sidebar/?viewport=mobile&amp;lang=fr&amp;from=mobile">
+        <span class="option__tag">Prototype B &middot; Mobile &middot; FR</span>
+        <span class="option__title">Drawer (French)</span>
+        <span class="option__text">Same mobile layout with French UI copy.</span>
+        <span class="option__cta">Ouvrir le panneau (FR)</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="panel panel--accent" aria-labelledby="frenchTitle">
+    <h2 id="frenchTitle">French testing</h2>
+    <p class="panel__intro">French page shell, category labels, helpers, and preference options. Desktop-width test; switch EN/FR anytime with the header language control.</p>
+    <div class="options">
+      <a class="option" href="modal/?viewport=desktop&amp;lang=fr&amp;from=french">
+        <span class="option__tag">Prototype A &middot; Fran&ccedil;ais</span>
+        <span class="option__title">Filtrage modal</span>
+        <span class="option__text">Pr&eacute;f&eacute;rences en fen&ecirc;tre modale. Id&eacute;al pour comparer avec la version anglaise.</span>
+        <span class="option__cta">Ouvrir le prototype A (FR)</span>
+      </a>
+      <a class="option" href="sidebar/?viewport=desktop&amp;lang=fr&amp;from=french">
+        <span class="option__tag">Prototype B &middot; Fran&ccedil;ais</span>
+        <span class="option__title">Filtrage lat&eacute;ral</span>
+        <span class="option__text">Pr&eacute;f&eacute;rences dans un panneau. Sur mobile, panneau coulissant.</span>
+        <span class="option__cta">Ouvrir le prototype B (FR)</span>
+      </a>
+    </div>
+    <p class="note" style="margin-top:16px">French on a phone: use the <strong>Mobile testing</strong> links with FR above.</p>
+  </section>
+
+  <section class="steps" aria-labelledby="stepsTitle">
+    <h2 id="stepsTitle">Before you start</h2>
+    <ol>
+      <li>Open the version your facilitator asks you to use.</li>
+      <li>Use it as if you were choosing a counsellor for yourself. Change your preferences, apply them, and look at the results.</li>
+      <li>Say what you are thinking as you go. There are no wrong answers.</li>
+      <li>Use <strong>Test home</strong> in the prototype header to return here. Use &ldquo;Reset session&rdquo; on a prototype page to start over without refreshing.</li>
+    </ol>
+  </section>
+
+  <p class="note">All counsellors and details are fictional. Nothing you do is saved or sent. Refreshing the page starts again. Works on desktop, tablet, and phone.</p>
+</main>
+</body>
+</html>

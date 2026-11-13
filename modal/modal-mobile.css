@@ -1,0 +1,60 @@
+/* Prototype A on compact screens: full-screen Preferences dialog.
+   Two views inside the dialog: the category list (.is-list) and one category's options (.is-pane). */
+
+.modal__back { display: none; }
+
+@media (max-width: 820px) {
+  .overlay { padding: 0; align-items: stretch; overflow: hidden; }
+  .modal {
+    width: 100%; height: 100dvh; max-height: none;
+    border: 0; border-radius: 0; box-shadow: none;
+  }
+
+  .modal__head {
+    height: auto; min-height: calc(56px + env(safe-area-inset-top)); gap: 4px; justify-content: flex-start;
+    padding: env(safe-area-inset-top) max(4px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  }
+  .modal__head h2 { flex: 1; }
+  .modal__head .icon-btn { width: 44px; height: 44px; }
+  .modal.is-pane .modal__back { display: grid; margin-left: -12px; }
+
+  .modal__body { flex-direction: column; }
+
+  /* Category list */
+  .modal.is-list .cats {
+    display: block; flex: 1; min-height: 0; width: 100%; padding: 0; border: 0; background: var(--bg-base);
+    overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
+  }
+  .modal.is-list .cat {
+    width: 100%; height: auto; min-height: 56px; padding: 8px 16px; gap: 12px;
+    white-space: normal; font-size: 16px; border-bottom: 1px solid var(--border-weak);
+  }
+  .modal.is-list .cat > span:first-child { flex: 1; }
+  .modal.is-list .cat::after {
+    content: ""; flex: none; width: 8px; height: 8px; margin-right: 4px;
+    border-top: 1.6px solid var(--text-weak); border-right: 1.6px solid var(--text-weak); transform: rotate(45deg);
+  }
+  .modal.is-list .cat[aria-selected="true"] { background: none; }
+  .modal.is-list .cat:hover { background: var(--bg-alt); }
+  .modal.is-list .pane { flex: none; }
+  .modal.is-list .pane__scroll { display: none; }
+
+  /* One category */
+  .modal.is-pane .cats { display: none; }
+  .modal.is-pane .pane__scroll { padding: 16px; overscroll-behavior: contain; }
+  .pane__title h3:focus { outline: none; }
+  .opt { min-height: 48px; }
+  .more { min-height: 44px; margin: 4px 0 8px; padding: 0 16px; }
+
+  /* Draft chips stay visible in both views. */
+  .sum { margin: 0 16px; padding-top: 8px; max-height: 128px; overscroll-behavior: contain; }
+
+  /* Sticky footer: Cancel and Apply first, Clear Preferences under them. */
+  .modal__foot {
+    flex-direction: column-reverse; align-items: stretch; flex-wrap: nowrap; gap: 4px; min-height: 0;
+    padding: 12px max(16px, env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .modal__actions { margin-left: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 12px; }
+  .modal__actions .btn { padding: 0 12px; }
+  .modal__foot .link--foot { align-self: center; min-height: 44px; display: inline-flex; align-items: center; }
+}

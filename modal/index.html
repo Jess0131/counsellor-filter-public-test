@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<script src="../shared/test-viewport-boot.js"></script>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Counsellor Directory &middot; Prototype A &middot; Modal filtering</title>
+<meta name="description" content="Usability-test prototype. Fictional data only. Not a real service.">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/styles.css">
+<link rel="stylesheet" href="../shared/test-chrome.css">
+<link rel="stylesheet" href="../shared/compact.css">
+<link rel="stylesheet" href="modal-mobile.css">
+</head>
+<body>
+<a class="skip-link" href="#results">Skip to counsellors</a>
+
+<header class="nav" role="banner">
+  <div class="nav__inner">
+    <a class="nav__test-home" id="testHome" href="../index.html">
+      <svg class="ic" aria-hidden="true"><use href="#i-arrow-left"/></svg>
+      <span>Test home</span>
+    </a>
+    <span class="nav__brand">Counsellor Directory</span>
+    <nav class="nav__links" aria-label="Primary">
+      <button type="button" class="nav__link" data-stub="Navigation is not part of this prototype.">Care Services <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <button type="button" class="nav__link" data-stub="Navigation is not part of this prototype.">Discover</button>
+    </nav>
+    <div class="nav__right">
+      <button type="button" class="nav__link" data-stub="Navigation is not part of this prototype.">Support <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <button type="button" class="nav__link" id="langToggle" title="Switch language" aria-label="Switch to French"><span class="nav__lang-label">EN</span> <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <button type="button" class="nav__user" data-stub="Account menu is not part of this prototype.">
+        <span class="nav__avatar" aria-hidden="true">AM</span> Alex Morgan <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="page" id="main">
+  <div class="page__crumbs">
+    <button type="button" class="back" id="pageBack" data-stub="Back is not part of this prototype.">
+      <svg class="ic" aria-hidden="true"><use href="#i-arrow-left"/></svg> <span class="back__label">Back to Counselling Home</span>
+    </button>
+    <nav aria-label="Breadcrumb" class="crumbs">
+      <button type="button" data-stub="Navigation is not part of this prototype.">Dashboard</button>
+      <span class="crumbs__sep" aria-hidden="true">/</span>
+      <span aria-current="page">Choose your path</span>
+    </nav>
+  </div>
+
+  <div class="page__head">
+    <p class="eyebrow" id="pageEyebrow">Individual Counselling</p>
+    <h1 id="pageH1">Match with a Counsellor</h1>
+    <p class="lede" id="pageLede">Use the filters to explore all available counsellors based on what&rsquo;s important to you like designation, specialty, or language.</p>
+  </div>
+
+  <section class="bar" aria-label="Filters and sorting">
+    <div class="bar__left">
+      <div class="sort">
+        <button type="button" class="pill pill--sort" id="sortBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu">
+          <span id="sortLabel">Sort by: Best fit</span> <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>
+        </button>
+        <ul class="sort__menu" id="sortMenu" role="listbox" aria-label="Sort by" hidden></ul>
+      </div>
+      <span class="bar__div" aria-hidden="true"></span>
+      <button type="button" class="pill pill--prefs" id="prefsBtn" aria-haspopup="dialog">
+        <span class="count" id="prefsCount">0</span> <span id="prefsBtnLabel">Preferences</span>
+      </button>
+      <span class="bar__div" aria-hidden="true"></span>
+      <button type="button" class="link link--icon" id="favBtn">
+        <svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg> <span id="favBtnLabel">My Favourites</span>
+      </button>
+    </div>
+    <div class="bar__right">
+      <button type="button" class="link" data-stub="Questionnaire is not part of this prototype.">Adjust Questionnaire Answers</button>
+      <span class="bar__div bar__div--thin" aria-hidden="true"></span>
+      <button type="button" class="link link--icon" data-stub="Direct codes are not part of this prototype.">Enter Direct Code <svg class="ic ic--circle" aria-hidden="true"><use href="#i-help"/></svg></button>
+    </div>
+  </section>
+
+  <section class="summary" aria-label="Applied preferences">
+    <p class="summary__line"><strong id="resultCount">17 counsellors</strong> <span id="resultHint"></span></p>
+    <ul class="chips" id="chips" aria-label="Applied preferences"></ul>
+    <button type="button" class="link link--clear" id="clearBtn">Clear choices</button>
+    <button type="button" class="link session-reset" id="sessionReset">Reset session</button>
+  </section>
+
+  <section id="results" class="results" aria-label="Counsellors" tabindex="-1">
+    <ul class="grid" id="grid"></ul>
+    <div class="empty" id="empty" hidden>
+      <p class="empty__title" id="emptyTitle">No counsellors match your language choices.</p>
+      <p id="emptyBody">Select English or French, or add another language.</p>
+      <button type="button" class="btn btn--outline" id="emptyClear">Clear choices</button>
+    </div>
+  </section>
+</main>
+
+<!-- Preferences modal -->
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal__head">
+      <h2 id="modalTitle">Preferences</h2>
+      <button type="button" class="icon-btn" id="modalClose" aria-label="Close preferences. Changes are not applied."><svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="modal__body">
+      <div class="cats" id="cats" role="tablist" aria-orientation="vertical" aria-label="Preference categories"></div>
+      <div class="pane" id="pane" role="tabpanel"></div>
+    </div>
+    <div class="modal__foot">
+      <button type="button" class="link link--foot" id="modalClear">Clear Preferences</button>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--outline" id="modalCancel">Cancel</button>
+        <button type="button" class="btn btn--primary" id="modalApply">Apply Preferences</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sr-only" id="live" role="status" aria-live="polite"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 20 20"><path d="M16 10H4m0 0l5-5m-5 5l5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 20 20"><path d="M10 16.5s-6-3.7-6-8.2A3.3 3.3 0 0110 6.6a3.3 3.3 0 016 1.7c0 4.5-6 8.2-6 8.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart-fill" viewBox="0 0 20 20"><path d="M10 16.5s-6-3.7-6-8.2A3.3 3.3 0 0110 6.6a3.3 3.3 0 016 1.7c0 4.5-6 8.2-6 8.2z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-xcircle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7.4 7.4l5.2 5.2M12.6 7.4l-5.2 5.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-checkcircle" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6.8 10.2l2.2 2.2 4.2-4.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M13 13l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 20 20"><rect x="3.5" y="4.5" width="13" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3.5 8.5h13M7 3v3M13 3v3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8.2 8a1.9 1.9 0 113 1.5c-.7.5-1.2.9-1.2 1.7M10 13.6v.1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M10 6.2v4.6M10 13.5v.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<script src="../shared/locale.js"></script>
+<script src="../shared/options-fr.js"></script>
+<script src="../shared/data.js"></script>
+<script src="../shared/matching.js"></script>
+<script src="app.js"></script>
+<script src="../shared/viewport-helper.js"></script>
+<script src="modal-mobile.js"></script>
+<script src="../shared/test-chrome.js"></script>
+</body>
+</html>
