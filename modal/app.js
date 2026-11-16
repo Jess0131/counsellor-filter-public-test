@@ -25,6 +25,11 @@
   /* ---------------------------------------------------------------- State */
   const state = { applied: clone(INITIAL_STATE), sort: 'best', favs: new Set() };
   const ui = { open: false, draft: null, cat: CONFIG.OPEN_ON, search: {}, expanded: {}, returnFocus: null };
+  const eventTargetEl = (e) => {
+    const t = e.target;
+    if (t instanceof Element) return t;
+    return t && t.parentElement instanceof Element ? t.parentElement : null;
+  };
 
   const hasRequiredLanguage = (langs) => M.hasRequiredLanguage(langs);
   const countValues = (s) => M.countValues(s);
@@ -113,7 +118,7 @@
     $('#prefsCount').textContent = countValues(state.applied);
     const u = typeof window.cfUi === 'function' ? window.cfUi() : null;
     $('#resultCount').textContent = n + (u ? u.counsellorWord(n) : (n === 1 ? ' counsellor' : ' counsellors'));
-    $('#resultHint').textContent = M.languageSentence(state.applied.language) + (u ? u.resultHint : ' Only language changes who is listed. Other choices change the order in Best fit.');
+    $('#resultHint').textContent = u ? u.resultSubtext : 'Results are prioritized based on your preferences.';
     $('#chips').innerHTML = chipsHtml(state.applied);
     $('#grid').innerHTML = rows.map(cardHtml).join('');
     $('#grid').hidden = n === 0;
@@ -385,6 +390,7 @@
   function clearApplied() {
     const before = countValues(state.applied);
     state.applied = clearedFrom(state.applied);
+    ui.draft = clone(state.applied);
     const rows = renderDirectory();
     announce('Choices cleared. ' + rows.length + ' counsellors listed.');
     toast('Choices cleared. Language set to English.');
@@ -392,10 +398,11 @@
   }
 
   function removeAppliedChip(catId, value) {
-    const sel = state.applied[catId];
     const pos = $$('#chips [data-remove]').findIndex((b) => b.dataset.remove === catId && b.dataset.value === value);
-    const i = sel.indexOf(value);
-    if (i >= 0) sel.splice(i, 1);
+    [state.applied[catId], ui.draft[catId]].forEach((sel) => {
+      const i = sel.indexOf(value);
+      if (i >= 0) sel.splice(i, 1);
+    });
     const rows = renderDirectory();
     const chips = $$('#chips [data-remove]');
     (chips[Math.min(pos, chips.length - 1)] || $('#prefsBtn')).focus();
@@ -405,6 +412,7 @@
 
   function resetSession() {
     state.applied = clone(INITIAL_STATE);
+    ui.draft = clone(INITIAL_STATE);
     state.sort = 'best';
     state.favs = new Set();
     ui.search = {};
@@ -422,7 +430,8 @@
 
   /* ---------------------------------------------------------------- Events */
   document.addEventListener('click', (e) => {
-    const t = e.target;
+    const t = eventTargetEl(e);
+    if (!t) return;
     const stub = t.closest('[data-stub]');
     if (stub) { toast(stub.dataset.stub); log('Tapped a control outside this prototype: ' + stub.textContent.trim().replace(/\s+/g, ' ')); return; }
 

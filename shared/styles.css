@@ -100,18 +100,23 @@ h1 { font-size: 21px; line-height: 30px; font-weight: 600; margin: 4px 0 12px; l
 
 /* Summary + chips */
 .summary { padding: 16px 16px 0; }
-.summary__line { font-size: 15px; display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
-.summary__line strong { font-size: 17px; font-weight: 600; }
-.summary__line span { color: var(--text-weaker); }
-.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.summary__head { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.summary__title { margin: 0; font-size: 20px; font-weight: 600; line-height: 1.25; color: var(--text-base); }
+.summary__lede { margin: 0; font-size: 14px; line-height: 1.4; font-weight: 400; color: var(--text-weaker); max-width: 42rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; align-items: center; }
 .chip {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 4px 12px; border-radius: var(--r-pill);
-  border: 1px solid var(--border-active); color: var(--text-primary); font-weight: 600; background: #fff; font-size: 14px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 32px; padding: 4px 8px 4px 12px; border-radius: var(--r-pill);
+  border: 1px solid var(--border-active); color: var(--text-primary); font-weight: 600; background: #fff; font-size: 14px; line-height: 1.25;
 }
-.chip--required { border-color: var(--border-base); color: var(--text-base); font-weight: 500; }
-.chip button { display: inline-grid; place-items: center; border-radius: 50%; color: var(--text-primary); }
+.chip--required { border-color: var(--border-base); color: var(--text-base); font-weight: 500; padding-right: 12px; }
+.chip button {
+  display: inline-grid; place-items: center; flex: none; border-radius: 50%; color: var(--text-primary);
+  min-width: 32px; min-height: 32px; margin-right: -4px; cursor: pointer;
+}
+.chip button svg, .chip button .ic { pointer-events: none; }
 .chip button .ic { width: 18px; height: 18px; }
 .chip button:hover { color: var(--state-primary-hover); background: var(--bg-primary-weak); }
+.chip button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
 .link--clear { display: inline-block; margin-top: 14px; }
 .session-reset {
   display: inline-flex; align-items: center; margin-top: 6px; margin-left: 12px;

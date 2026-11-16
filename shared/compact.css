@@ -33,11 +33,11 @@
 
   /* Applied chips: the remove button keeps its 24px look with a 44px tap area. */
   .summary { padding: 16px 0 0; }
-  .summary__line { flex-direction: column; gap: 4px; }
+  .summary__head { gap: 4px; }
+  .summary__title { font-size: 18px; }
   .chips { gap: 8px; }
   .chip { min-height: 36px; }
-  .chip button { position: relative; width: 24px; height: 24px; }
-  .chip button::after { content: ""; position: absolute; inset: -10px; }
+  .chip button { min-width: 44px; min-height: 44px; margin-right: -10px; }
   .link--clear { min-height: 44px; display: inline-flex; align-items: center; margin-top: 4px; }
 
   /* Results: one column on phones. */

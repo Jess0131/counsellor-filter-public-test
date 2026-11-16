@@ -57,7 +57,7 @@
     <p class="lede" id="pageLede">Use the filters to explore all available counsellors based on what&rsquo;s important to you like designation, specialty, or language.</p>
   </div>
 
-  <div class="layout" id="layout">
+  <div class="layout is-collapsed" id="layout">
     <aside class="side" id="side" aria-labelledby="sideTitle">
       <div class="side__head">
         <h2 id="sideTitle">Preferences</h2>
@@ -86,7 +86,7 @@
             <ul class="sort__menu" id="sortMenu" role="listbox" aria-label="Sort by" hidden></ul>
           </div>
           <span class="bar__div" aria-hidden="true"></span>
-          <button type="button" class="pill pill--prefs" id="prefsBtn" aria-controls="side" aria-expanded="true">
+          <button type="button" class="pill pill--prefs" id="prefsBtn" aria-controls="side" aria-expanded="false">
             <span class="count" id="prefsCount">0</span> <span id="prefsBtnLabel">Preferences</span>
           </button>
           <span class="bar__div" aria-hidden="true"></span>
@@ -102,7 +102,10 @@
       </section>
 
       <section class="summary" aria-label="Applied preferences">
-        <p class="summary__line"><strong id="resultCount">17 counsellors</strong> <span id="resultHint"></span></p>
+        <div class="summary__head">
+          <h2 class="summary__title" id="resultCount">17 counsellors</h2>
+          <p class="summary__lede" id="resultHint">Results are prioritized based on your preferences.</p>
+        </div>
         <ul class="chips" id="chips" aria-label="Applied preferences"></ul>
         <button type="button" class="link link--clear" id="clearBtn">Clear choices</button>
         <button type="button" class="link session-reset" id="sessionReset">Reset session</button>

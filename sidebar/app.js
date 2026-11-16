@@ -11,8 +11,8 @@
   const ASSET_BASE = '../shared/';
   // Six options before "Show N more" (Language: 6 shown, "Show 40 more").
   const SIDE_VISIBLE_OPTIONS = 6;
-  // Sections open on first load.
-  const DEFAULT_OPEN = ['format', 'language', 'availability', 'gender'];
+  // Accordion sections start collapsed so participants open categories as needed.
+  const DEFAULT_OPEN = [];
 
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
@@ -30,8 +30,13 @@
 
   /* ---------------------------------------------------------------- State */
   const state = { applied: clone(INITIAL_STATE), sort: 'best', favs: new Set() };
-  const ui = { draft: clone(INITIAL_STATE), sideOpen: true, openSecs: new Set(DEFAULT_OPEN), search: {}, expanded: {} };
+  const ui = { draft: clone(INITIAL_STATE), sideOpen: false, openSecs: new Set(DEFAULT_OPEN), search: {}, expanded: {} };
   const isDirty = () => JSON.stringify(ui.draft) !== JSON.stringify(state.applied);
+  const eventTargetEl = (e) => {
+    const t = e.target;
+    if (t instanceof Element) return t;
+    return t && t.parentElement instanceof Element ? t.parentElement : null;
+  };
 
   /* ---------------------------------------------------------------- Log, toast, announcements */
   function log() {}
@@ -109,7 +114,7 @@
     $('#prefsCount').textContent = M.countValues(state.applied);
     const u = typeof window.cfUi === 'function' ? window.cfUi() : null;
     $('#resultCount').textContent = n + (u ? u.counsellorWord(n) : (n === 1 ? ' counsellor' : ' counsellors'));
-    $('#resultHint').textContent = M.languageSentence(state.applied.language) + (u ? u.resultHint : ' Only language changes who is listed. Other choices change the order in Best fit.');
+    $('#resultHint').textContent = u ? u.resultSubtext : 'Results are prioritized based on your preferences.';
     $('#chips').innerHTML = chipsHtml(state.applied, 'applied');
     $('#grid').innerHTML = rows.map(cardHtml).join('');
     $('#grid').hidden = n === 0;
@@ -259,6 +264,41 @@
     renderSum();
     renderSections();
     renderFoot();
+    scheduleSideViewportHeight();
+  }
+
+  const SIDE_STICKY_TOP_PX = 16;
+  const SIDE_STICKY_BOTTOM_PX = 16;
+
+  function isDesktopSidebarLayout() {
+    if ($('#layout').classList.contains('is-collapsed')) return false;
+    return !(typeof window.cfIsCompactTest === 'function' && window.cfIsCompactTest());
+  }
+
+  /** Sets --side-available-height from viewport minus measured top inset (header, crumbs, test bar, etc.). */
+  function syncSideViewportHeight() {
+    const side = $('#side');
+    const root = document.documentElement;
+    if (!side || !isDesktopSidebarLayout()) {
+      root.style.removeProperty('--side-available-height');
+      root.style.removeProperty('--sidebar-offset');
+      return;
+    }
+    root.style.setProperty('--side-sticky-top', SIDE_STICKY_TOP_PX + 'px');
+    root.style.setProperty('--side-sticky-bottom', SIDE_STICKY_BOTTOM_PX + 'px');
+    const topInset = Math.max(SIDE_STICKY_TOP_PX, side.getBoundingClientRect().top);
+    const offset = topInset + SIDE_STICKY_BOTTOM_PX;
+    root.style.setProperty('--sidebar-offset', offset + 'px');
+    root.style.setProperty('--side-available-height', 'calc(100dvh - ' + offset + 'px)');
+  }
+
+  let sideHeightRaf = 0;
+  function scheduleSideViewportHeight() {
+    if (sideHeightRaf) return;
+    sideHeightRaf = requestAnimationFrame(() => {
+      sideHeightRaf = 0;
+      syncSideViewportHeight();
+    });
   }
 
   function setSideOpen(open, focusTarget) {
@@ -266,6 +306,8 @@
     $('#layout').classList.toggle('is-collapsed', !open);
     $('#prefsBtn').setAttribute('aria-expanded', String(open));
     if (focusTarget) focusTarget.focus();
+    scheduleSideViewportHeight();
+    if (open) requestAnimationFrame(() => scheduleSideViewportHeight());
   }
 
   function openSection(id) {
@@ -384,7 +426,7 @@
     ui.search = {};
     ui.expanded = {};
     toggleSortMenu(false);
-    setSideOpen(true);
+    setSideOpen(false);
     renderDirectory();
     renderSidebar();
     $('#sideScroll').scrollTop = 0;
@@ -394,7 +436,8 @@
 
   /* ---------------------------------------------------------------- Events */
   document.addEventListener('click', (e) => {
-    const t = e.target;
+    const t = eventTargetEl(e);
+    if (!t) return;
     const stub = t.closest('[data-stub]');
     if (stub) { toast(stub.dataset.stub); log('Tapped a control outside this prototype: ' + stub.textContent.trim().replace(/\s+/g, ' ')); return; }
     if (!t.closest('.sort')) toggleSortMenu(false);
@@ -492,7 +535,12 @@
     if (typeof window.cfApplyLocale === 'function') window.cfApplyLocale();
     renderDirectory();
     renderSidebar();
+    scheduleSideViewportHeight();
   };
+
+  window.addEventListener('resize', scheduleSideViewportHeight);
+  window.addEventListener('scroll', scheduleSideViewportHeight, { passive: true });
+  window.addEventListener('load', scheduleSideViewportHeight);
 
   /* ---------------------------------------------------------------- Boot */
   if (typeof window.cfApplyPageLocale === 'function') window.cfApplyPageLocale();
@@ -501,4 +549,5 @@
     renderDirectory();
     renderSidebar();
   }
+  setSideOpen(false);
 })();
