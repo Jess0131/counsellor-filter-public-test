@@ -301,11 +301,22 @@
     });
   }
 
+  function isDesktopLayout() {
+    return !(typeof window.cfIsCompactTest === 'function' && window.cfIsCompactTest());
+  }
+
+  function updatePrefsGuide() {
+    const g = $('#prefsGuide');
+    if (!g) return;
+    g.hidden = !(isDesktopLayout() && !ui.sideOpen);
+  }
+
   function setSideOpen(open, focusTarget) {
     ui.sideOpen = open;
     $('#layout').classList.toggle('is-collapsed', !open);
     $('#prefsBtn').setAttribute('aria-expanded', String(open));
     if (focusTarget) focusTarget.focus();
+    updatePrefsGuide();
     scheduleSideViewportHeight();
     if (open) requestAnimationFrame(() => scheduleSideViewportHeight());
   }
@@ -550,4 +561,5 @@
     renderSidebar();
   }
   setSideOpen(false);
+  updatePrefsGuide();
 })();

@@ -6,6 +6,18 @@
 .layout.is-collapsed .side { display: none; }
 .main-col { min-width: 0; }
 .main-col .bar { margin-top: 0; }
+.bar__guide {
+  margin: 0 0 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--bg-alt);
+  color: var(--text-weaker);
+  font-size: 14px;
+  line-height: 20px;
+  max-width: 42rem;
+}
+.bar__guide[hidden] { display: none; }
+.bar__guide strong { color: var(--text-base); font-weight: 600; }
 .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .layout.is-collapsed .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 

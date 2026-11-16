@@ -8,7 +8,7 @@
 <title>Counsellor Directory &middot; Usability test</title>
 <meta name="description" content="Usability-test prototypes. Fictional data only. Not a real service.">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="shared/styles.css">
+<link rel="stylesheet" href="shared/styles.css?v=20261116.2">
 <style>
   .landing { max-width: 880px; margin: 0 auto; padding: 48px max(24px, env(safe-area-inset-right)) calc(64px + env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left)); }
   .landing h1 { font-size: 28px; line-height: 36px; margin: 8px 0 12px; }
@@ -25,6 +25,10 @@
   .option__title { font-size: 21px; line-height: 28px; font-weight: 600; }
   .option__text { color: var(--text-weaker); }
   .option__cta { margin-top: 8px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .panel__steps { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-weak); max-width: 640px; }
+  .panel__steps h3 { font-size: 17px; line-height: 24px; font-weight: 600; margin: 0 0 12px; }
+  .panel__steps ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--text-weaker); font-size: 15px; line-height: 22px; }
+  .panel__steps li strong { color: var(--text-base); font-weight: 600; }
   .steps { margin-top: 24px; padding: 0; background: transparent; }
   .steps h2 { font-size: 17px; line-height: 24px; font-weight: 600; margin-bottom: 12px; }
   .steps ol { list-style: decimal; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
@@ -59,10 +63,19 @@
       <a class="option" href="sidebar/?viewport=desktop&amp;from=desktop">
         <span class="option__tag">Prototype B</span>
         <span class="option__title">Sidebar filtering</span>
-        <span class="option__text">Preferences stay in a column beside the results.</span>
+        <span class="option__text">Preferences live in a column beside the results. The column starts hidden&mdash;use <strong>Preferences</strong> in the toolbar to open it.</span>
         <span class="option__cta">Open Prototype B</span>
       </a>
     </div>
+    <section class="panel__steps" aria-labelledby="desktopGuideTitle">
+      <h3 id="desktopGuideTitle">Before you start</h3>
+      <ol>
+        <li>Open the version your facilitator asks you to use (A or B above).</li>
+        <li>Prototype B: select <strong>Preferences</strong> to show the filter column, then change options and choose <strong>Apply Preferences</strong>.</li>
+        <li>Use the prototype as if you were choosing a counsellor. Results are prioritized for testing&mdash;they are not real matching.</li>
+        <li>Think aloud as you go. Use <strong>Test home</strong> in the header to return here, or <strong>Reset session</strong> to start over.</li>
+      </ol>
+    </section>
   </section>
 
   <section class="panel panel--accent" aria-labelledby="mobileTitle">
@@ -114,16 +127,6 @@
       </a>
     </div>
     <p class="note" style="margin-top:16px">French on a phone: use the <strong>Mobile testing</strong> links with FR above.</p>
-  </section>
-
-  <section class="steps" aria-labelledby="stepsTitle">
-    <h2 id="stepsTitle">Before you start</h2>
-    <ol>
-      <li>Open the version your facilitator asks you to use.</li>
-      <li>Use it as if you were choosing a counsellor for yourself. Change your preferences, apply them, and look at the results.</li>
-      <li>Say what you are thinking as you go. There are no wrong answers.</li>
-      <li>Use <strong>Test home</strong> in the prototype header to return here. Use &ldquo;Reset session&rdquo; on a prototype page to start over without refreshing.</li>
-    </ol>
   </section>
 
   <p class="note">All counsellors and details are fictional. Nothing you do is saved or sent. Refreshing the page starts again. Works on desktop, tablet, and phone.</p>
